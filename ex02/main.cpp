@@ -79,7 +79,6 @@ int main(void) {
 	Fixed h(std::move(g)); // Move constructor
 	printTestResult("Move constructor", h, b);
 	printTestResultBool("g after move", g.getRawBits() == 0, true);
-	// Check if g is in a valid state (typically 0 or some "moved-from" state)
 
 	Fixed i;
 	i = c; // Copy assignment operator
@@ -88,7 +87,20 @@ int main(void) {
 	Fixed j;
 	j = std::move(i); // Move assignment operator
 	printTestResult("Move assignment", j, c);
-	printTestResultBool("i after move", i.getRawBits() == 0, true); // Check if i is in a valid state
+	printTestResultBool("i after move", i.getRawBits() == 0, true);
+
+	std::cout << CYAN << "\nAdvanced Arithmetic Tests:" << RESET << std::endl;
+	printTestResult("c + d", c + d, Fixed(20.5f));
+	printTestResult("e + f", e + f, Fixed(-15.5f));
+	printTestResult("d - e", d - e, Fixed(16.0f));
+	printTestResult("f * e", f * e, Fixed(55.0f));
+	printTestResult("c / e", c / e, Fixed(-1.81818f));
+
+	std::cout << CYAN << "\nMixed Type Arithmetic Tests:" << RESET << std::endl;
+	printTestResult("c + 10.5f", c + Fixed(10.5f), Fixed(20.5f));
+	printTestResult("d - 5", d - Fixed(5), Fixed(5.5f));
+	printTestResult("f * -2.5f", f * Fixed(-2.5f), Fixed(25.0f));
+	printTestResult("e / 0.5f", e / Fixed(0.5f), Fixed(-11.0f));
 
 	return 0;
 }

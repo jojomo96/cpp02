@@ -1,4 +1,3 @@
-
 #include "Fixed.hpp"
 
 #include <iostream>
@@ -12,8 +11,15 @@ Fixed::Fixed(const int value) {
 }
 
 Fixed::Fixed(const float value) {
-	_value = static_cast<int>(roundf(value * (1 << _fractionalBits)));
-	// std::cout << "Float constructor called" << std::endl;
+	int maxValue = std::numeric_limits<int>::max() >> _fractionalBits;
+	int minValue = std::numeric_limits<int>::min() >> _fractionalBits;
+	if (value > maxValue || value < minValue) {
+		std::cerr << "Error: Value out of range for fixed-point representation. "
+				<< "Valid range is [" << minValue << ", " << maxValue << "]." << std::endl;
+		_value = 0; // Set to a default value or handle the error as needed
+	} else {
+		_value = static_cast<int>(roundf(value * (1 << _fractionalBits)));
+	}
 }
 
 Fixed::Fixed(const Fixed &src) : _value(src._value) {
@@ -63,7 +69,7 @@ int Fixed::toInt() const {
 	return _value >> _fractionalBits;
 }
 
-Fixed & Fixed::min(Fixed &a, Fixed &b) {
+Fixed &Fixed::min(Fixed &a, Fixed &b) {
 	return a < b ? a : b;
 }
 
@@ -71,7 +77,7 @@ Fixed &Fixed::max(Fixed &a, Fixed &b) {
 	return a > b ? a : b;
 }
 
-const Fixed & Fixed::min(const Fixed &a, const Fixed &b) {
+const Fixed &Fixed::min(const Fixed &a, const Fixed &b) {
 	return a < b ? a : b;
 }
 
@@ -79,31 +85,38 @@ const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
 	return a > b ? a : b;
 }
 
+// Output stream
 std::ostream &operator<<(std::ostream &os, const Fixed &fixed) {
 	os << fixed.toFloat();
 	return os;
 }
 
+// Greater than
 bool operator>(const Fixed &lhs, const Fixed &rhs) {
 	return lhs.toFloat() > rhs.toFloat();
 }
 
+// Less than
 bool operator<(const Fixed &lhs, const Fixed &rhs) {
 	return lhs.toFloat() < rhs.toFloat();
 }
 
+// Greater than or equal to
 bool operator>=(const Fixed &lhs, const Fixed &rhs) {
 	return lhs.toFloat() >= rhs.toFloat();
 }
 
+// Less than or equal to
 bool operator<=(const Fixed &lhs, const Fixed &rhs) {
 	return lhs.toFloat() <= rhs.toFloat();
 }
 
+// Equality
 bool operator==(const Fixed &lhs, const Fixed &rhs) {
 	return lhs.getRawBits() == rhs.getRawBits();
 }
 
+// Inequality
 bool operator!=(const Fixed &lhs, const Fixed &rhs) {
 	return lhs.getRawBits() != rhs.getRawBits();
 }
