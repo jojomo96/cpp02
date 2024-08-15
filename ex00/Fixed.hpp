@@ -12,6 +12,6 @@ public:
 	[[nodiscard]] int getRawBits() const;
 	void setRawBits(int const raw);
 private:
-	int _fixedPointValue;
+	int _value;
 	static const int _fractionalBits = 8;
 };
