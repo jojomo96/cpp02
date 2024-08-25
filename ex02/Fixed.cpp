@@ -127,7 +127,7 @@ bool Fixed::operator!=(const Fixed &rhs) const {
 
 // Addition
 Fixed Fixed::operator+(const Fixed &rhs) const {
-	Fixed sum(0);
+	Fixed sum;
 
 	sum.setRawBits(this->getRawBits() + rhs.getRawBits());
 	return sum;
