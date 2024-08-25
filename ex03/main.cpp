@@ -2,6 +2,12 @@
 #include "Point.hpp"
 #include "bsp.hpp"
 
+
+void printPointStatus(const Point &pointOnEdge, const bool resultOnEdge) {
+	std::cout << "Point (" << pointOnEdge.getX() << ", " << pointOnEdge.getY() << ") is "
+			<< (resultOnEdge ? "inside" : "outside") << " the triangle." << std::endl;
+}
+
 int main() {
 	// Define the vertices of the triangle
 	const Point a(0.0f, 0.0f);
@@ -16,10 +22,8 @@ int main() {
 	bool result1 = bsp(a, b, c, point1);
 	bool result2 = bsp(a, b, c, point2);
 
-	// Print the results
-	std::cout << "Point (5.0, 5.0) is " << (result1 ? "inside" : "outside") << " the triangle." << std::endl;
-	std::cout << "Point (15.0, 5.0) is " << (result2 ? "inside" : "outside") << " the triangle." << std::endl;
-
+	printPointStatus(point1, result1);
+	printPointStatus(point2, result2);
 
 	// Define a point that lies on the edge of the triangle
 	const Point pointOnEdge(5.0f, 0.0f);
@@ -29,9 +33,7 @@ int main() {
 	bool resultOnVertex = bsp(a, b, c, a);
 
 	// Print the result
-	std::cout << "Point (" << pointOnEdge.getX() << ", " << pointOnEdge.getY() << ") is "
-			  << (resultOnEdge ? "inside" : "outside") << " the triangle." << std::endl;
-	std::cout << "Point (" << a.getX() << ", " << a.getY() << ") is "
-			  << (resultOnVertex ? "inside" : "outside") << " the triangle." << std::endl;
+	printPointStatus(pointOnEdge, resultOnEdge);
+	printPointStatus(a, resultOnVertex);
 	return 0;
 }
