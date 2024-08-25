@@ -3,25 +3,25 @@
 
 class Fixed {
 public:
-	Fixed(); // Default constructor
+	Fixed();
 
-	explicit Fixed(int value); // Constructor with parameters
+	explicit Fixed(const int value);
 
-	explicit Fixed(float value); // Constructor with parameters
+	explicit Fixed(const float value);
 
-	Fixed(const Fixed &src); // Copy constructor
+	Fixed(const Fixed &src);
 
 	Fixed(Fixed &&src) noexcept; // Move constructor
 
-	~Fixed(); // Destructor
+	~Fixed();
 
-	Fixed &operator=(const Fixed &src); // Copy assignment operator
+	Fixed &operator=(const Fixed &src);
 
 	Fixed &operator=(Fixed &&src) noexcept; // Move assignment operator
 
 	[[nodiscard]] int getRawBits() const;
 
-	void setRawBits(int raw);
+	void setRawBits(int const raw);
 
 	[[nodiscard]] float toFloat() const;
 
@@ -34,37 +34,43 @@ public:
 	static const Fixed &min(const Fixed &a, const Fixed &b);
 
 	static const Fixed &max(const Fixed &a, const Fixed &b);
+
+	bool operator>(const Fixed &rhs) const;
+
+	bool operator<(const Fixed &rhs) const;
+
+	bool operator>=(const Fixed &rhs) const;
+
+	bool operator<=( const Fixed &rhs) const;
+
+	bool operator==( const Fixed &rhs) const;
+
+	bool operator!=( const Fixed &rhs) const;
+
+	Fixed operator+( const Fixed &rhs) const;
+
+	Fixed operator-( const Fixed &rhs) const;
+
+	Fixed operator*( const Fixed &rhs) const;
+
+	Fixed operator/( const Fixed &rhs) const;
+
+	Fixed operator++(int);
+
+	Fixed operator++();
+
+	Fixed operator--(int);
+
+	Fixed operator--();
+
+
 private:
 	int _value;
+
 	static const int _fractionalBits = 8;
 };
 
 std::ostream &operator<<(std::ostream &os, const Fixed &fixed);
 
-bool operator>(const Fixed &lhs, const Fixed &rhs);
 
-bool operator<(const Fixed &lhs, const Fixed &rhs);
 
-bool operator>=(const Fixed &lhs, const Fixed &rhs);
-
-bool operator<=(const Fixed &lhs, const Fixed &rhs);
-
-bool operator==(const Fixed &lhs, const Fixed &rhs);
-
-bool operator!=(const Fixed &lhs, const Fixed &rhs);
-
-Fixed operator+(const Fixed &lhs, const Fixed &rhs);
-
-Fixed operator-(const Fixed &lhs, const Fixed &rhs);
-
-Fixed operator*(const Fixed &lhs, const Fixed &rhs);
-
-Fixed operator/(const Fixed &lhs, const Fixed &rhs);
-
-Fixed &operator++(Fixed &fixed);
-
-Fixed operator++(Fixed &fixed, int);
-
-Fixed &operator--(Fixed &fixed);
-
-Fixed operator--(Fixed &fixed, int);
