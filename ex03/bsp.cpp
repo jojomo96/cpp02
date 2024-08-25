@@ -5,7 +5,7 @@ Fixed crossProduct(Fixed const &x1, Fixed const &y1, Fixed const &x2, Fixed cons
 	return x1 * y2 - x2 * y1;
 }
 
-bool bsp(Point const &a, Point const &b, Point const &c, Point const &point) {
+bool bsp(Point const a, Point const b, Point const c, Point const point) {
 	Fixed const x = point.getX();
 	Fixed const y = point.getY();
 	Fixed const x1 = a.getX();
