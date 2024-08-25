@@ -35,37 +35,37 @@ public:
 
 	static const Fixed &max(const Fixed &a, const Fixed &b);
 
-	friend std::ostream &operator<<(std::ostream &os, const Fixed &fixed);
-
-	friend bool operator>(const Fixed &lhs, const Fixed &rhs);
-
-	friend bool operator<(const Fixed &lhs, const Fixed &rhs);
-
-	friend bool operator>=(const Fixed &lhs, const Fixed &rhs);
-
-	friend bool operator<=(const Fixed &lhs, const Fixed &rhs);
-
-	friend bool operator==(const Fixed &lhs, const Fixed &rhs);
-
-	friend bool operator!=(const Fixed &lhs, const Fixed &rhs);
-
-	friend Fixed operator+(const Fixed &lhs, const Fixed &rhs);
-
-	friend Fixed operator-(const Fixed &lhs, const Fixed &rhs);
-
-	friend Fixed operator*(const Fixed &lhs, const Fixed &rhs);
-
-	friend Fixed operator/(const Fixed &lhs, const Fixed &rhs);
-
-	friend Fixed &operator++(Fixed &fixed);
-
-	friend Fixed operator++(Fixed &fixed, int);
-
-	friend Fixed &operator--(Fixed &fixed);
-
-	friend Fixed operator--(Fixed &fixed, int);
-
 private:
 	int _value;
 	static const int _fractionalBits = 8;
 };
+
+std::ostream &operator<<(std::ostream &os, const Fixed &fixed);
+
+bool operator>(const Fixed &lhs, const Fixed &rhs);
+
+bool operator<(const Fixed &lhs, const Fixed &rhs);
+
+bool operator>=(const Fixed &lhs, const Fixed &rhs);
+
+bool operator<=(const Fixed &lhs, const Fixed &rhs);
+
+bool operator==(const Fixed &lhs, const Fixed &rhs);
+
+bool operator!=(const Fixed &lhs, const Fixed &rhs);
+
+Fixed operator+(const Fixed &lhs, const Fixed &rhs);
+
+Fixed operator-(const Fixed &lhs, const Fixed &rhs);
+
+Fixed operator*(const Fixed &lhs, const Fixed &rhs);
+
+Fixed operator/(const Fixed &lhs, const Fixed &rhs);
+
+Fixed &operator++(Fixed &fixed);
+
+Fixed operator++(Fixed &fixed, int);
+
+Fixed &operator--(Fixed &fixed);
+
+Fixed operator--(Fixed &fixed, int);

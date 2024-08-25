@@ -27,9 +27,9 @@ public:
 
 	[[nodiscard]] int toInt() const;
 
-	friend std::ostream &operator<<(std::ostream &os, const Fixed &fixed);
-
 private:
 	int _value;
 	static const int _fractionalBits = 8;
 };
+
+std::ostream &operator<<(std::ostream &os, const Fixed &fixed);
