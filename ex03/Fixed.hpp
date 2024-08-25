@@ -3,19 +3,19 @@
 
 class Fixed {
 public:
-	Fixed();
+	Fixed(); // Default constructor
 
-	explicit Fixed(int value);
+	explicit Fixed(int value); // Constructor with parameters
 
-	explicit Fixed(float value);
+	explicit Fixed(float value); // Constructor with parameters
 
-	Fixed(const Fixed &src);
+	Fixed(const Fixed &src); // Copy constructor
 
 	Fixed(Fixed &&src) noexcept; // Move constructor
 
-	~Fixed();
+	~Fixed(); // Destructor
 
-	Fixed &operator=(const Fixed &src);
+	Fixed &operator=(const Fixed &src); // Copy assignment operator
 
 	Fixed &operator=(Fixed &&src) noexcept; // Move assignment operator
 

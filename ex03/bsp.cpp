@@ -19,6 +19,7 @@ bool bsp(Point const a, Point const b, Point const c, Point const point) {
 	Fixed const cp2 = crossProduct(x - x2, y - y2, x3 - x2, y3 - y2);
 	Fixed const cp3 = crossProduct(x - x3, y - y3, x1 - x3, y1 - y3);
 
-	return (cp1 >= Fixed(0) && cp2 >= Fixed(0) && cp3 >= Fixed(0))
-		|| (cp1 <= Fixed(0) && cp2 <= Fixed(0) && cp3 <= Fixed(0));
+	// Check if the point is strictly inside the triangle
+	return (cp1 > Fixed(0) && cp2 > Fixed(0) && cp3 > Fixed(0)) ||
+	       (cp1 < Fixed(0) && cp2 < Fixed(0) && cp3 < Fixed(0));
 }
