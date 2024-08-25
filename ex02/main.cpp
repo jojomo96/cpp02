@@ -63,6 +63,13 @@ int main(void) {
 	printTestResult("b * c", b * c, Fixed(101.016f));
 	printTestResult("b / c", b / c, Fixed(1.01f));
 
+	try {
+		std::cout << "b / 0: ";
+		std::cout << b / Fixed(0) << std::endl;
+	} catch (std::exception &e) {
+		std::cout << RED << "Exception: " << e.what() << RESET << std::endl;
+	}
+
 	std::cout << CYAN << "\nComparison Tests:" << RESET << std::endl;
 	printTestResultBool("b > c", b > c, true);
 	printTestResultBool("b < c", b < c, false);
