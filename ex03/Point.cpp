@@ -18,10 +18,11 @@ Point &Point::operator=(Point const &src) {
 	return *this;
 }
 
+// unassasary because of const Fixed
 Point &Point::operator=(Point &&src) noexcept {
 	if (this != &src) {
-		const_cast<Fixed &>(x) = src.x;
-		const_cast<Fixed &>(y) = src.y;
+		const_cast<Fixed &>(x) = std::move(src.x);
+		const_cast<Fixed &>(y) = std::move(src.y);
 	}
 	return *this;
 }
