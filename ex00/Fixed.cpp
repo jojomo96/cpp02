@@ -23,6 +23,19 @@ Fixed &Fixed::operator=(const Fixed &src) {
 	return *this;
 }
 
+Fixed::Fixed(Fixed &&src) noexcept : _value(src._value) {
+	std::cout << "Move constructor called" << std::endl;
+	src._value = 0;
+}
+
+Fixed &Fixed::operator=(Fixed &&src) noexcept {
+	if (this != &src) {
+		_value = src._value;
+		src._value = 0;
+	}
+	return *this;
+}
+
 int Fixed::getRawBits() const {
 	std::cout << "getRawBits member function called" << std::endl;
 	return this->_value;
