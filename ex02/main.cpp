@@ -46,12 +46,16 @@ int main(void) {
 	std::cout << "f: " << f << std::endl;
 
 	std::cout << CYAN << "\nIncrement/Decrement Tests:" << RESET << std::endl;
-	printTestResult("++a", ++a, Fixed(1));
-	printTestResult("a++", a++, Fixed(1));
-	printTestResult("a", a, Fixed(2));
-	printTestResult("--a", --a, Fixed(1));
-	printTestResult("a--", a--, Fixed(1));
+	printTestResult("++a", ++a, Fixed(0.00390625f));
+	printTestResult("a++", a++, Fixed(0.00390625f));
+	printTestResult("a", a, Fixed(0.0078125f));
+	printTestResult("--a", --a, Fixed(0.00390625f));
+	printTestResult("a--", a--, Fixed(0.00390625f));
 	printTestResult("a", a, Fixed(0));
+	a = Fixed(0);
+	printTestResult("--a", --a, Fixed(-0.00390625f));
+	printTestResult("a--", a--, Fixed(-0.00390625f));
+	printTestResult("a", a, Fixed(-0.0078125f));
 
 	std::cout << CYAN << "\nArithmetic Tests:" << RESET << std::endl;
 	printTestResult("b + c", b + c, Fixed(20.1f));

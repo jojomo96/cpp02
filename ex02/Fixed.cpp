@@ -69,18 +69,22 @@ int Fixed::toInt() const {
 	return _value >> _fractionalBits;
 }
 
+// Static member function min for non-const references
 Fixed &Fixed::min(Fixed &a, Fixed &b) {
 	return a < b ? a : b;
 }
 
-Fixed &Fixed::max(Fixed &a, Fixed &b) {
-	return a > b ? a : b;
-}
-
+// Static member function min for const references
 const Fixed &Fixed::min(const Fixed &a, const Fixed &b) {
 	return a < b ? a : b;
 }
 
+// Static member function max for non-const references
+Fixed &Fixed::max(Fixed &a, Fixed &b) {
+	return a > b ? a : b;
+}
+
+// Static member function max for const references
 const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
 	return a > b ? a : b;
 }
@@ -146,26 +150,28 @@ Fixed operator/(const Fixed &lhs, const Fixed &rhs) {
 
 // Prefix increment
 Fixed &operator++(Fixed &fixed) {
-	fixed.setRawBits(fixed.getRawBits() + (1 << Fixed::_fractionalBits));
+	fixed.setRawBits(fixed.getRawBits() + 1);
 	return fixed;
 }
 
 // Postfix increment
 Fixed operator++(Fixed &fixed, int) {
 	Fixed tmp(fixed);
-	fixed.setRawBits(fixed.getRawBits() + (1 << Fixed::_fractionalBits));
+	fixed.setRawBits(fixed.getRawBits() + 1);
 	return tmp;
 }
 
 // Prefix decrement
 Fixed &operator--(Fixed &fixed) {
-	fixed.setRawBits(fixed.getRawBits() - (1 << Fixed::_fractionalBits));
+	fixed.setRawBits(fixed.getRawBits() - 1);
+
 	return fixed;
 }
 
 // Postfix decrement
 Fixed operator--(Fixed &fixed, int) {
 	Fixed tmp(fixed);
-	fixed.setRawBits(fixed.getRawBits() - (1 << Fixed::_fractionalBits));
+	fixed.setRawBits(fixed.getRawBits() - 1);
 	return tmp;
 }
+
