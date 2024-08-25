@@ -61,7 +61,7 @@ int main(void) {
 	printTestResult("b + c", b + c, Fixed(20.1f));
 	printTestResult("b - c", b - c, Fixed(0.1f));
 	printTestResult("b * c", b * c, Fixed(101.016f));
-	printTestResult("b / c", b / c, Fixed(1.01f));
+	printTestResult("b / c", b / c, Fixed(1.00781f));
 
 	try {
 		std::cout << "b / 0: ";

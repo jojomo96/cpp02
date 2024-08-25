@@ -62,7 +62,7 @@ void Fixed::setRawBits(int const raw) {
 }
 
 float Fixed::toFloat() const {
-	return static_cast<float>(_value) / (1 << _fractionalBits);
+	return static_cast<float>(_value) / static_cast<float>(1 << _fractionalBits);
 }
 
 int Fixed::toInt() const {
@@ -76,7 +76,7 @@ Fixed &Fixed::min(Fixed &a, Fixed &b) {
 
 // Static member function min for const references
 const Fixed &Fixed::min(const Fixed &a, const Fixed &b) {
-	return a < b ? a : b;
+	return a.getRawBits() < b.getRawBits() ? a : b;
 }
 
 // Static member function max for non-const references
@@ -86,7 +86,7 @@ Fixed &Fixed::max(Fixed &a, Fixed &b) {
 
 // Static member function max for const references
 const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
-	return a > b ? a : b;
+	return a.getRawBits() > b.getRawBits() ? a : b;
 }
 
 // Output stream
@@ -96,82 +96,91 @@ std::ostream &operator<<(std::ostream &os, const Fixed &fixed) {
 }
 
 // Greater than
-bool operator>(const Fixed &lhs, const Fixed &rhs) {
-	return lhs.toFloat() > rhs.toFloat();
+bool Fixed::operator>(const Fixed &rhs) const {
+	return this->getRawBits() > rhs.getRawBits();
 }
 
 // Less than
-bool operator<(const Fixed &lhs, const Fixed &rhs) {
-	return lhs.toFloat() < rhs.toFloat();
+bool Fixed::operator<(const Fixed &rhs) const {
+	return this->getRawBits() < rhs.getRawBits();
 }
 
 // Greater than or equal to
-bool operator>=(const Fixed &lhs, const Fixed &rhs) {
-	return lhs.toFloat() >= rhs.toFloat();
+bool Fixed::operator>=(const Fixed &rhs) const {
+	return this->getRawBits() >= rhs.getRawBits();
 }
 
 // Less than or equal to
-bool operator<=(const Fixed &lhs, const Fixed &rhs) {
-	return lhs.toFloat() <= rhs.toFloat();
+bool Fixed::operator<=(const Fixed &rhs) const {
+	return this->getRawBits() <= rhs.getRawBits();
 }
 
 // Equality
-bool operator==(const Fixed &lhs, const Fixed &rhs) {
-	return lhs.getRawBits() == rhs.getRawBits();
+bool Fixed::operator==(const Fixed &rhs) const {
+	return this->getRawBits() == rhs.getRawBits();
 }
 
 // Inequality
-bool operator!=(const Fixed &lhs, const Fixed &rhs) {
-	return lhs.getRawBits() != rhs.getRawBits();
+bool Fixed::operator!=(const Fixed &rhs) const {
+	return this->getRawBits() != rhs.getRawBits();
 }
 
 // Addition
-Fixed operator+(const Fixed &lhs, const Fixed &rhs) {
-	return Fixed(lhs.toFloat() + rhs.toFloat());
+Fixed Fixed::operator+(const Fixed &rhs) const {
+	Fixed sum(0);
+
+	sum.setRawBits(this->getRawBits() + rhs.getRawBits());
+	return sum;
 }
 
 // Subtraction
-Fixed operator-(const Fixed &lhs, const Fixed &rhs) {
-	return Fixed(lhs.toFloat() - rhs.toFloat());
+Fixed Fixed::operator-(const Fixed &rhs) const {
+	Fixed difference;
+
+	difference.setRawBits(this->getRawBits() - rhs.getRawBits());
+	return difference;
 }
 
 // Multiplication
-Fixed operator*(const Fixed &lhs, const Fixed &rhs) {
-	return Fixed(lhs.toFloat() * rhs.toFloat());
+Fixed Fixed::operator*(const Fixed &rhs) const {
+	Fixed product;
+
+	product.setRawBits((this->getRawBits() * rhs.getRawBits()) >> _fractionalBits);
+	return product;
 }
 
 // Division
-Fixed operator/(const Fixed &lhs, const Fixed &rhs) {
-	if (rhs.toFloat() == 0) {
+Fixed Fixed::operator/(const Fixed &rhs) const {
+	if (rhs.getRawBits() == 0) {
 		throw std::runtime_error("Error: Division by zero");
 	}
-	return Fixed(lhs.toFloat() / rhs.toFloat());
+	Fixed quotient;
+	quotient.setRawBits((this->getRawBits() << _fractionalBits) / rhs.getRawBits());
+	return quotient;
 }
 
 // Prefix increment
-Fixed &operator++(Fixed &fixed) {
-	fixed.setRawBits(fixed.getRawBits() + 1);
-	return fixed;
+Fixed Fixed::operator++() {
+	this->setRawBits(this->getRawBits() + 1);
+	return *this;
 }
 
 // Postfix increment
-Fixed operator++(Fixed &fixed, int) {
-	Fixed tmp(fixed);
-	fixed.setRawBits(fixed.getRawBits() + 1);
+Fixed Fixed::operator++(int) {
+	Fixed tmp(*this);
+	this->setRawBits(this->getRawBits() + 1);
 	return tmp;
 }
 
 // Prefix decrement
-Fixed &operator--(Fixed &fixed) {
-	fixed.setRawBits(fixed.getRawBits() - 1);
-
-	return fixed;
+Fixed Fixed::operator--() {
+	this->setRawBits(this->getRawBits() - 1);
+	return *this;
 }
 
 // Postfix decrement
-Fixed operator--(Fixed &fixed, int) {
-	Fixed tmp(fixed);
-	fixed.setRawBits(fixed.getRawBits() - 1);
+Fixed Fixed::operator--(int) {
+	Fixed tmp(*this);
+	this->setRawBits(this->getRawBits() - 1);
 	return tmp;
 }
-
