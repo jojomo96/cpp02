@@ -62,7 +62,7 @@ void Fixed::setRawBits(int const raw) {
 }
 
 float Fixed::toFloat() const {
-	return static_cast<float>(_value) / static_cast<float>(1 << _fractionalBits);
+	return static_cast<float>(_value) / (1 << _fractionalBits);
 }
 
 int Fixed::toInt() const {
@@ -76,7 +76,7 @@ Fixed &Fixed::min(Fixed &a, Fixed &b) {
 
 // Static member function min for const references
 const Fixed &Fixed::min(const Fixed &a, const Fixed &b) {
-	return a.getRawBits() < b.getRawBits() ? a : b;
+	return a < b ? a : b;
 }
 
 // Static member function max for non-const references
@@ -86,7 +86,7 @@ Fixed &Fixed::max(Fixed &a, Fixed &b) {
 
 // Static member function max for const references
 const Fixed &Fixed::max(const Fixed &a, const Fixed &b) {
-	return a.getRawBits() > b.getRawBits() ? a : b;
+	return a > b ? a : b;
 }
 
 // Output stream
